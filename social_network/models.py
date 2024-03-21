@@ -19,9 +19,9 @@ class UserFollowing(models.Model):
     following_user_id = models.ForeignKey(
         AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="following"
+        related_name="followers"
     )
-    create = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = (('user_id', 'following_user_id'),)
