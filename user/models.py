@@ -48,7 +48,9 @@ class User(AbstractUser):
     posts = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
-        related_name="users"
+        related_name="users",
+        blank=True,
+        null=True
     )
 
     USERNAME_FIELD = "email"
