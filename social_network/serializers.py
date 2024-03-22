@@ -56,8 +56,12 @@ class UserFollowingSerializer(serializers.ModelSerializer):
 
 
 class UserFollowerSerializer(serializers.ModelSerializer):
+    followers_user_email = serializers.EmailField(
+        source="user_id.email", read_only=True
+    )
+
     class Meta:
         model = UserFollowing
-        fields = ("id", "user_id", "created")
+        fields = ("id", "user_id", "created", "followers_user_email")
 
 
