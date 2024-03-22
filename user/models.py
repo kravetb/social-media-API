@@ -45,13 +45,6 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(_("email address"), unique=True)
-    posts = models.ForeignKey(
-        Post,
-        on_delete=models.CASCADE,
-        related_name="users",
-        blank=True,
-        null=True
-    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

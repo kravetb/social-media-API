@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/user/", include("user.urls", namespace="user")),
     path(
-        "api/user",
+        "api/social_network/",
         include("social_network.urls", namespace="social_network")
     ),
 ]

@@ -4,7 +4,12 @@ from social_media_service.settings import AUTH_USER_MODEL
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    description = models.TextField(blank=True)
+    user = models.ForeignKey(
+        AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="posts",
+    )
 
     def __str__(self):
         return self.title
