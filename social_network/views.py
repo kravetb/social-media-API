@@ -3,7 +3,7 @@ from rest_framework import viewsets, mixins
 from social_network.models import Post
 from social_network.serializers import (
     PostSerializer,
-    PostCreateSerializer
+    PostCreateSerializer, PostDetailSerializer
 )
 
 
@@ -20,6 +20,9 @@ class PostViewSet(
 
         if self.action == "create":
             return PostCreateSerializer
+
+        if self.action == "retrieve":
+            return PostDetailSerializer
 
         return PostSerializer
 
