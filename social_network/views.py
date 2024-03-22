@@ -1,9 +1,9 @@
 from rest_framework import viewsets, mixins
 
-from social_network.models import Post
+from social_network.models import Post, UserFollowing
 from social_network.serializers import (
     PostSerializer,
-    PostCreateSerializer, PostDetailSerializer
+    PostCreateSerializer, PostDetailSerializer, UserFollowingSerializer
 )
 
 
@@ -28,3 +28,14 @@ class PostViewSet(
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class UserFollowingViewSet(viewsets.ModelViewSet):
+    serializer_class = UserFollowingSerializer
+    queryset = UserFollowing.objects.all()
+
+    def get_queryset(self):
+        return UserFollowing.objects.filter(user_id__id=self.request.user.id)
+
+    def perform_create(self, serializer):
+        serializer.save(user_id=self.request.user)
