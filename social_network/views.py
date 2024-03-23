@@ -14,7 +14,6 @@ class PostViewSet(
     mixins.RetrieveModelMixin
 
 ):
-    queryset = Post.objects.all()
 
     def get_serializer_class(self):
 
@@ -25,6 +24,9 @@ class PostViewSet(
             return PostDetailSerializer
 
         return PostSerializer
+
+    def get_queryset(self):
+        return Post.objects.filter(user=self.request.user.id)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
