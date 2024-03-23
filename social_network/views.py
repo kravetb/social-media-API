@@ -7,7 +7,7 @@ from social_network.serializers import (
 )
 
 
-class PostViewSet(
+class OwnPostViewSet(
     viewsets.GenericViewSet,
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
@@ -31,6 +31,34 @@ class PostViewSet(
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class FollowingPostViewSet(
+    viewsets.GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin
+):
+    queryset = Post.objects.all()
+
+    def get_serializer_class(self):
+
+        if self.action == "retrieve":
+            return PostDetailSerializer
+
+        return PostSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        following_users = (
+            UserFollowing
+            .objects
+            .filter(user_id__id=self.request.user.id))
+        following_user_ids = list(
+            following_users.values_list("following_user_id", flat=True)
+        )
+
+        queryset = queryset.filter(user__in=following_user_ids)
+        return queryset
 
 
 class UserFollowingViewSet(viewsets.ModelViewSet):

@@ -1,13 +1,19 @@
 from rest_framework import routers
 
 from social_network.views import (
-    PostViewSet,
+    OwnPostViewSet,
     UserFollowingViewSet,
-    UserFollowerViewSet
+    UserFollowerViewSet,
+    FollowingPostViewSet
 )
 
 router = routers.DefaultRouter()
-router.register("posts", PostViewSet)
+router.register("own_posts", OwnPostViewSet, basename="own-post")
+router.register(
+    "following_posts",
+    FollowingPostViewSet,
+    basename="following-post"
+)
 router.register("followings", UserFollowingViewSet)
 router.register("followers", UserFollowerViewSet, basename="user-follower")
 
