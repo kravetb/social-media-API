@@ -14,6 +14,7 @@ class PostViewSet(
     mixins.RetrieveModelMixin
 
 ):
+    queryset = Post.objects.all()
 
     def get_serializer_class(self):
 
